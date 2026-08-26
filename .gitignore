@@ -1,0 +1,15 @@
+.dart_tool/
+.packages
+build/
+.flutter-plugins
+.flutter-plugins-dependencies
+.idea/
+*.iml
+
+# مجلدات المنصات بتتولّد تلقائي وقت البناء (flutter create) في GitHub Actions
+/android/
+/ios/
+/linux/
+/macos/
+/windows/
+/web/
