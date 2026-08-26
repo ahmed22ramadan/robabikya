@@ -16,25 +16,22 @@ jobs:
           channel: stable
 
       - name: Generate native Android project
-        run: flutter create --org com.robabikya --project-name robabikya --platforms=android .[cite: 1]
+        run: flutter create --org com.robabikya --project-name robabikya --platforms=android .
 
       - name: Copy Firebase config into place
-        run: cp google-services.json android/app/google-services.json[cite: 1]
+        run: cp google-services.json android/app/google-services.json
 
       - name: Patch Android project (permissions, name, Firebase plugin)
-        run: python3 scripts/patch_android.py[cite: 1]
+        run: python3 scripts/patch_android.py
 
       - name: Get packages
-        run: flutter pub get[cite: 1]
+        run: flutter pub get
 
       - name: Build release APK
-        run: flutter build apk --release[cite: 1]
+        run: flutter build apk --release
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: robabikya-apk
-          path: build/app/outputs/flutter-apk/app-release.apk[cite: 1]
-```[cite: 1]
-
-تأكد من حفظ التعديل ده في ملف الـ `.github/workflows/build.yml` على موقع GitHub، وبعدين ادخل على تبويب **Actions** واضغط على **Re-run all jobs** عشان تبدأ عملية البناء من جديد بشكل سليم!
+          path: build/app/outputs/flutter-apk/app-release.apk
