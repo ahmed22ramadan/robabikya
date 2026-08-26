@@ -35,3 +35,6 @@ jobs:
         with:
           name: robabikya-apk
           path: build/app/outputs/flutter-apk/app-release.apk[cite: 1]
+```[cite: 1]
+
+تأكد من حفظ التعديل ده في ملف الـ `.github/workflows/build.yml` على موقع GitHub، وبعدين ادخل على تبويب **Actions** واضغط على **Re-run all jobs** عشان تبدأ عملية البناء من جديد بشكل سليم!
