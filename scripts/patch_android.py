@@ -76,13 +76,45 @@ def patch_plugin_block(path: pathlib.Path, insert_line: str) -> None:
     )
 
 
-# 2) android/app/build.gradle(.kts): إضافة Google Services plugin
+def patch_application_id(path: pathlib.Path, is_kts: bool) -> None:
+    """
+    flutter create --org com.robabikya --project-name robabikya بيولّد
+    applicationId = com.robabikya.robabikya (org + اسم المشروع مع بعض)،
+    مش com.robabikya.app اللي متسجل في Firebase Console. نثبّته هنا صراحةً
+    عشان يطابق التسجيل بالظبط.
+    """
+    content = path.read_text(encoding="utf-8")
+    target = "com.robabikya.app"
+
+    if is_kts:
+        pattern = r'applicationId\s*=\s*"[^"]+"'
+        replacement = f'applicationId = "{target}"'
+    else:
+        pattern = r'applicationId\s+"[^"]+"'
+        replacement = f'applicationId "{target}"'
+
+    match = re.search(pattern, content)
+    if not match:
+        fail(f"{path}: مالقيتش سطر applicationId. محتوى الملف:\n{content}")
+
+    new_content = re.sub(pattern, replacement, content, count=1)
+    path.write_text(new_content, encoding="utf-8")
+
+    verify = path.read_text(encoding="utf-8")
+    if f'"{target}"' not in verify:
+        fail(f"{path}: اتكتب applicationId لكن القيمة الجديدة مش موجودة بعد إعادة القراءة!")
+    print(f"{path}: applicationId اتظبط على {target}.")
+
+
+# 2) android/app/build.gradle(.kts): applicationId الصحيح + Google Services plugin
 app_gradle_kts = pathlib.Path("android/app/build.gradle.kts")
 app_gradle_groovy = pathlib.Path("android/app/build.gradle")
 
 if app_gradle_kts.exists():
+    patch_application_id(app_gradle_kts, is_kts=True)
     patch_plugin_block(app_gradle_kts, 'id("com.google.gms.google-services")')
 elif app_gradle_groovy.exists():
+    patch_application_id(app_gradle_groovy, is_kts=False)
     patch_plugin_block(app_gradle_groovy, 'id "com.google.gms.google-services"')
 else:
     fail("مفيش android/app/build.gradle ولا build.gradle.kts — يبدو إن flutter create فشل قبل الخطوة دي.")
