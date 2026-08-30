@@ -1,0 +1,30 @@
+name: robabikya
+description: تطبيق روبابيكيا لطلب تحصيل المخلفات القابلة لإعادة التدوير
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  firebase_core: ^3.6.0
+  firebase_auth: ^5.3.1
+  cloud_firestore: ^5.4.3
+  google_sign_in: ^6.2.1
+  http: ^1.2.2
+  image_picker: ^1.1.2
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  intl: ^0.19.0
+  url_launcher: ^6.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
